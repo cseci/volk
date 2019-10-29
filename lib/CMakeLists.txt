@@ -41,6 +41,13 @@ if(HAVE_DLFCN_H)
 endif()
 
 ########################################################################
+# Android Support
+########################################################################
+if(ANDROID)
+  list(APPEND volk_libraries m log)
+endif(ANDROID)
+
+########################################################################
 # Setup the compiler name
 ########################################################################
 set(COMPILER_NAME ${CMAKE_C_COMPILER_ID})
@@ -576,7 +583,8 @@ install(TARGETS volk
 #Configure static library
 if(ENABLE_STATIC_LIBS)
   add_library(volk_static STATIC $<TARGET_OBJECTS:volk_obj>)
-  target_link_libraries(volk_static ${volk_libraries} pthread)
+  # target_link_libraries(volk_static ${volk_libraries} pthread)
+  target_link_libraries(volk_static ${volk_libraries})
   if(NOT MSVC)
     target_link_libraries(volk_static m)
   endif()
