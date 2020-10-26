@@ -165,9 +165,9 @@ endif()
 # For MSVC use `_aligned_malloc`.
 ########################################################################
 include(CheckSymbolExists)
-if(NOT (${CMAKE_SYSTEM_NAME} MATCHES "Darwin"))
-    CHECK_SYMBOL_EXISTS(aligned_alloc stdlib.h USE_ALIGNED_ALLOC)
-endif()
+# if(NOT (${CMAKE_SYSTEM_NAME} MATCHES "Darwin"))
+#     CHECK_SYMBOL_EXISTS(aligned_alloc stdlib.h USE_ALIGNED_ALLOC)
+# endif()
 if(NOT USE_ALIGNED_ALLOC)
     CHECK_SYMBOL_EXISTS(posix_memalign stdlib.h HAVE_POSIX_MEMALIGN)
 endif()
