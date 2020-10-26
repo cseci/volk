@@ -25,6 +25,13 @@ if(HAVE_POSIX_MEMALIGN)
     add_definitions(-DHAVE_POSIX_MEMALIGN)
 endif(HAVE_POSIX_MEMALIGN)
 
+if(ANDROID)
+    set(CMAKE_CXX_FLAGS "-fPIE ${CMAKE_CXX_FLAGS}")
+    set(LINK_LLOG_ANDROID "-fPIE -pie -Wl,-Bdynamic -L{ANDROID_SYSROOT}/usr/lib -llog")
+else()
+    set(LINK_LLOG_ANDROID "")
+endif()
+
 # MAKE volk_profile
 add_executable(volk_profile
     ${CMAKE_CURRENT_SOURCE_DIR}/volk_profile.cc
@@ -54,8 +61,8 @@ endif()
 target_link_libraries(volk_profile PRIVATE std::filesystem)
 
 if(ENABLE_STATIC_LIBS)
-    target_link_libraries(volk_profile PRIVATE volk_static)
-    set_target_properties(volk_profile PROPERTIES LINK_FLAGS "-static")
+    target_link_libraries(volk_profile PRIVATE volk_static ${Boost_LIBRARIES})
+    set_target_properties(volk_profile PROPERTIES LINK_FLAGS "${LINK_LLOG_ANDROID} -static")
 else()
     target_link_libraries(volk_profile PRIVATE volk)
 endif()
@@ -72,7 +79,7 @@ add_executable(volk-config-info volk-config-info.cc ${CMAKE_CURRENT_SOURCE_DIR}/
 
 if(ENABLE_STATIC_LIBS)
     target_link_libraries(volk-config-info volk_static)
-    set_target_properties(volk-config-info PROPERTIES LINK_FLAGS "-static")
+    set_target_properties(volk-config-info PROPERTIES LINK_FLAGS "${LINK_LLOG_ANDROID} -static")
 else()
     target_link_libraries(volk-config-info volk)
 endif()
