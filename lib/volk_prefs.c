@@ -11,6 +11,10 @@
 #endif
 #include <volk/volk_prefs.h>
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
 void volk_get_config_path(char* path, bool read)
 {
     if (!path)
@@ -72,8 +76,9 @@ size_t volk_load_preferences(volk_arch_pref_t** prefs_res)
 
     // get the config path
     volk_get_config_path(path, true);
+    __android_log_print(ANDROID_LOG_DEBUG, "volk", "loading config from %s", path);
     if (!path[0])
-        return n_arch_prefs; // no prefs found
+        return n_arch_prefs; //no prefs found
     config_file = fopen(path, "r");
     if (!config_file)
         return n_arch_prefs; // no prefs found
@@ -94,5 +99,6 @@ size_t volk_load_preferences(volk_arch_pref_t** prefs_res)
     }
     fclose(config_file);
     *prefs_res = prefs;
+    __android_log_print(ANDROID_LOG_DEBUG, "volk", "loaded %zu configs", n_arch_prefs);
     return n_arch_prefs;
 }
