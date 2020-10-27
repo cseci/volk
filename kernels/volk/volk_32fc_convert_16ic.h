@@ -165,18 +165,18 @@ static inline void volk_32fc_convert_16ic_a_sse2(lv_16sc_t* outputVector,
 
 #define VCVTRQ_S32_F32(res, val)                \
     __VOLK_ASM("VCVTR.S32.F32 %[r0], %[v0]\n\t" \
-               : [r0] "=w"(res[0])              \
-               : [v0] "w"(val[0])               \
+               : [r0] "=t"(res[0])              \
+               : [v0] "t"(val[0])               \
                :);                              \
     __VOLK_ASM("VCVTR.S32.F32 %[r1], %[v1]\n\t" \
-               : [r1] "=w"(res[1])              \
-               : [v1] "w"(val[1])               \
+               : [r1] "=t"(res[1])              \
+               : [v1] "t"(val[1])               \
                :);                              \
     __VOLK_ASM("VCVTR.S32.F32 %[r2], %[v2]\n\t" \
-               : [r2] "=w"(res[2])              \
-               : [v2] "w"(val[2])               \
+               : [r2] "=t"(res[2])              \
+               : [v2] "t"(val[2])               \
                :);                              \
-    __VOLK_ASM("VCVTR.S32.F32 %[r3], %[v3]\n\t" : [r3] "=w"(res[3]) : [v3] "w"(val[3]) :);
+    __VOLK_ASM("VCVTR.S32.F32 %[r3], %[v3]\n\t" : [r3] "=t"(res[3]) : [v3] "t"(val[3]) :);
 
 static inline void volk_32fc_convert_16ic_neon(lv_16sc_t* outputVector,
                                                const lv_32fc_t* inputVector,
